@@ -1,0 +1,21 @@
+.Form{
+  width: 700px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: aqua;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.Label{
+  font-weight: 500;
+}
+
+.Input{
+  height: 40px;
+  padding: 5px;
+  margin: 0px 0px 0px 5px;
+}
