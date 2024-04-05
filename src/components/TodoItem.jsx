@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import styles from "../styles/TodoItem.module.css";
+import { MyContext } from "../store/TodoItemsContext.jsx";
 
-function TodoItem({ item, deleteItem }) {
+function TodoItem({ item}) {
+  const {deleteItem} = useContext(MyContext)
   return (
     <>
       <div className={`${styles.item} container text-center`}>
