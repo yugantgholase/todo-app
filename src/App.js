@@ -5,11 +5,13 @@ import Heading from './components/Heading';
 import ErrorMessage from './components/ErrorMessage';
 import { useState } from 'react';
 import TodoItems from './components/TodoItems';
+import {MyContext} from './store/TodoItemsContext.jsx';
 
 
 function App() {
 
   const [todoItems, setTodoItems] = useState([]);
+  console.log("Rendering")
 
   const addItem = (todoName, todoDate) =>{
     setTodoItems((currentValue) => [...currentValue, {todoName: todoName, todoDate: todoDate}])
@@ -23,12 +25,14 @@ function App() {
   }
   return (
     <>
+    <MyContext.Provider value={{todoItems, addItem, deleteItem}}>
     <center>
     <Heading />
     <AddTodo addItem = {addItem}/>
     {todoItems.length === 0 && <ErrorMessage /> }
-    <TodoItems todoItems={todoItems} deleteItem ={deleteItem}/>
+    <TodoItems deleteItem ={deleteItem}/>
     </center>
+    </MyContext.Provider>
     </>
   );
 }
