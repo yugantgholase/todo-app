@@ -3,25 +3,47 @@ import AddTodo from './components/AddTodo';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Heading from './components/Heading';
 import ErrorMessage from './components/ErrorMessage';
-import { useState } from 'react';
+import { useReducer } from 'react';
 import TodoItems from './components/TodoItems';
 import {MyContext} from './store/TodoItemsContext.jsx';
+
+const reducer = (currentTodoItems, action) =>{
+  let newItems = currentTodoItems;
+
+  if(action.type === "ADD"){
+    newItems = [...newItems, {todoName: action.payload.todoName, todoDate: action.payload.todoDate} ]
+  }else if(action.type === "DELETE"){
+    newItems = newItems.filter((item) => item.todoName !== action.payload.todoName)
+  }
+
+  return newItems;
+}
 
 
 function App() {
 
-  const [todoItems, setTodoItems] = useState([]);
+  //const [todoItems, setTodoItems] = useState([]);
+
+  //similar to useState hook. but here we can have custom state logic.
+  const [todoItems, dispatch] = useReducer(reducer, []);
   console.log("Rendering")
 
   const addItem = (todoName, todoDate) =>{
-    setTodoItems((currentValue) => [...currentValue, {todoName: todoName, todoDate: todoDate}])
+    dispatch(
+      {
+        type : "ADD",
+        payload : {todoName, todoDate}
+      }
+    )
   }
 
   const deleteItem =  (todoName) => {
-    setTodoItems((currentValue) => {
-      let updatedItems = currentValue.filter((item) => item.todoName !== todoName);
-      return updatedItems;
-    });
+    dispatch(
+      {
+        type : "DELETE",
+        payload : {todoName}
+      }
+    )
   }
   return (
     <>
